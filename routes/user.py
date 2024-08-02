@@ -45,10 +45,35 @@ def fetch_users():
     return jsonify({"users": users}), 200
 
 
-@user.route('/user/<username>', methods=['DELETE'])
-def delete_user(username):
-    if not redis_client.exists(username):
-        return jsonify({"error": "User does not exist"}), 404
+# @user.route('/user/<username>', methods=['DELETE'])
+# def delete_user(username):
+#     if not redis_client.exists(username):
+#         return jsonify({"error": "User does not exist"}), 404
 
+#     redis_client.delete(username)
+#     return jsonify({"message": "User deleted successfully"}), 200
+
+@user.route('/user/<username>', methods=['PUT'])
+def update_username(username):
+    data = request.get_json()
+    new_username = data.get('new_username')
+
+    if not new_username:
+        return jsonify({"error": "New username is required"}), 400
+
+    if not redis_client.exists(username):
+        return jsonify({"error": "Old username does not exist"}), 404
+
+    if redis_client.exists(new_username):
+        return jsonify({"error": "New username already exists"}), 400
+
+    # Get the user's password from the old username
+    password = redis_client.hget(username, "password")
+
+    # Delete the old username
     redis_client.delete(username)
-    return jsonify({"message": "User deleted successfully"}), 200
+
+    # Create the new username with the same password
+    redis_client.hset(new_username, "password", password)
+
+    return jsonify({"message": "Username updated successfully"}), 200
