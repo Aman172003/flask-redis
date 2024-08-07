@@ -1,24 +1,44 @@
 ---------------------------------------------------------------------------------------------------
-// Signup or create a user
+//  Add a Book
 
-curl -X POST http://localhost:5000/signup \
-    -H "Content-Type: application/json" \
-    -d '{"username": "keploy", "password": "123456789"}'
+curl -X POST http://localhost:5000/books/ \
+-H "Content-Type: application/json" \
+-d '{"title": "1984", "author": "George Orwell"}'
+
+---------------------------------------------------------------------------------------------------
+
+// Get All Books(with Pagination)
+
+curl -X GET "http://localhost:5000/books/?page=1&limit=10"
+
+---------------------------------------------------------------------------------------------------
+
+// Get Book Details
+
+curl -X GET http://localhost:5000/books/1
+
+---------------------------------------------------------------------------------------------------
+
+
+//Search Books by Title
+
+curl -X GET "http://localhost:5000/books/search?query=1984"
 
 
 ---------------------------------------------------------------------------------------------------
 
-// login
+//Update a Book
 
-curl -X POST http://localhost:5000/login \
-    -H "Content-Type: application/json" \
-    -d '{"username": "keploy", "password": "123456789"}'
+curl -X PUT http://localhost:5000/books/1 \
+-H "Content-Type: application/json" \
+-d '{"title": "1984 - Updated", "author": "George Orwell"}'
+
 
 ---------------------------------------------------------------------------------------------------
 
-// get all users
+//Delete a Book
 
-curl -X GET http://localhost:5000/users
+curl -X DELETE http://localhost:5000/books/1
 
 ---------------------------------------------------------------------------------------------------
 

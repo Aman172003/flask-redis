@@ -1,10 +1,10 @@
 version: api.keploy.io/v1beta1
 kind: Http
-name: test-3
+name: test-6
 spec:
     metadata: {}
     req:
-        method: GET
+        method: DELETE
         proto_major: 1
         proto_minor: 1
         url: http://localhost:5000/books/1
@@ -13,30 +13,29 @@ spec:
             Host: localhost:5000
             User-Agent: curl/8.6.0
         body: ""
-        timestamp: 2024-08-02T22:15:24.919087736Z
+        timestamp: 2024-08-02T22:15:47.228393997Z
     resp:
         status_code: 200
         header:
-            Content-Length: "51"
+            Content-Length: "45"
             Content-Type: application/json
-            Date: Fri, 02 Aug 2024 22:15:24 GMT
+            Date: Fri, 02 Aug 2024 22:15:47 GMT
             Server: Werkzeug/3.0.3 Python/3.10.14
         body: |
             {
-              "author": "George Orwell",
-              "title": "1984"
+              "message": "Book deleted successfully"
             }
         status_message: OK
         proto_major: 0
         proto_minor: 0
-        timestamp: 2024-08-02T22:15:26.965315001Z
+        timestamp: 2024-08-02T22:15:49.269456095Z
     objects: []
     assertions:
         noise:
             header.Date: []
-    created: 1722636926
+    created: 1722636949
 curl: |
-    curl --request GET \
+    curl --request DELETE \
       --url http://localhost:5000/books/1 \
       --header 'Accept: */*' \
       --header 'Host: localhost:5000' \
